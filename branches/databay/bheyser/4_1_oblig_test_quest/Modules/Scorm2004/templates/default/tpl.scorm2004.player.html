@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="scormplayer">
+	<head>
+		<title>{DOC_TITLE}</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=7" />
+		<script type="text/javascript">//<![CDATA[
+		Date.remoteOffset = (new Date()).getTime() - {TIMESTAMP};
+		//]]></script>
+		
+		<link type="text/css" href="{LOCATION_STYLESHEET}" rel="stylesheet"/>
+		<link type="text/css" href="{BASE_DIR}templates/default/player.css" rel="stylesheet"/>
+
+		<base target="frmResource" />
+		
+		<style>
+			.asset { padding-left: 18px; background: url({IC_ASSET}) 0 0 no-repeat; } 
+			.completed { padding-left: 18px; background: url({IC_COMPLETED}) 0 0 no-repeat; } 
+			.not_attempted{padding-left: 18px; background: url({IC_NOTATTEMPTED}) 0 0 no-repeat;}
+			.running {padding-left: 18px; background: url({IC_RUNNING}) 0 0 no-repeat;}
+			.incomplete {padding-left: 18px; background: url({IC_INCOMPLETE}) 0 0 no-repeat;}
+			.passed {padding-left: 18px; background: url({IC_PASSED}) 0 0 no-repeat;}
+			.failed {padding-left: 18px; background: url({IC_FAILED}) 0 0 no-repeat;}
+			.browsed {padding-left: 18px; background: url({IC_BROWSED}) 0 0 no-repeat;}
+		</style>
+		
+	</head>
+	<body class="loadingState">
+
+		<table {VAL_DISPLAY} id="toolbarTable" width="100%" height="100%" style="height: 100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tr height="1%">
+				<td class="submit">	
+						<div style="clear:both; margin: 1px 8px 3px 8px;" class="il_ContainerItemCommands">
+							
+								<a target="_self" href="#" class="il_ContainerItemCommand" onclick="toggleView();" id="treeToggle">{btnhidetree}</a>
+								&nbsp;
+							
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navStart">{btnStart}</a>
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navExit">{btnExit}</a>
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navExitAll">{btnExitAll}</a>
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navSuspendAll">{btnSuspendAll}</a>
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navPrevious">&lt; {btnPrevious}</a>
+								<a target="_self" href="#" class="il_ContainerItemCommand" id="navContinue">{btnContinue} &gt;</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+		<table id="introTable" width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tr valign="top" >			
+				<td class="std">
+					<noscript>{NO_JAVASCRIPT}</noscript>
+					<div style="display: none !important; background-color: red !important; color: white !important; font: 14pt/1.0 monospace !important">{NO_CSS}</div>
+					<div id="introLabel">loading</div>
+				</td>				
+			</tr>
+		</table>
+
+		<table id="mainTable" width="100%" height="100%" style="width: 100%; height: 100%"
+			cellspacing="0" cellpadding="0" border="0" summary="">
+				<tr valign="top">
+				<td style="width:25%" width="25%" id="leftView">
+					<div id="treeView"></div>
+					<div id="ilLog" style="font-size:9px; white-space:pre; overflow:scroll;"><pre id="ilLogPre" style="font-family:Verdana,Arial,Helvetica,sans-serif;"></pre></div>
+					<div id="treeControls" style="vertical-align:middle; margin-left:5px"><a id="toggleLog" href="#" onclick="toggleLog();" style="font-size:11px;">Show Log</a> &nbsp; &nbsp;<a id="toggleTree" href="#" onclick="toggleTree();" style="font-size:11px;">Collapse All</a> </div>
+				</td>
+				<td style="width:75%; height:98%;" width="75%" height="98%" id="tdResource">
+					<iframe id="res" style="width: 100%; height:100%;" frameborder="0"></iframe>
+				</td>
+			</tr>
+			
+		</table>
+		
+		<script type="text/javascript" src="{YUI_PATH}yahoo/yahoo-min.js"></script>
+		<script type="text/javascript" src="{YUI_PATH}event/event-min.js"></script>
+		<script type="text/javascript" src="./Modules/Scorm2004/scripts/yui/treeview/treeview-min.js"></script>
+			
+		<script type="text/javascript" src="./Modules/Scorm2004/scripts/rteconfig.js"></script>
+
+		<script type="text/javascript" src="{JS_SCRIPTS}"></script>		
+		<script type="text/javascript">
+		
+		//<![CDATA[
+			scorm_init({JS_DATA});
+		//]]>
+		</script>
+		
+	</body>
+</html>

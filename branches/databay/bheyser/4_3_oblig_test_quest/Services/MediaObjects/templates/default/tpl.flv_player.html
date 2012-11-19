@@ -1,0 +1,46 @@
+<!-- BEGIN video -->
+<video id="player{PLAYER_NR}" width="{DISPLAY_WIDTH}" height="{DISPLAY_HEIGHT}" controls="controls" preload="none">
+	<!-- BEGIN source --><source src="{FILE}" type="{MIME}" /><!-- END source -->
+	<object width="{DISPLAY_WIDTH}" height="{DISPLAY_HEIGHT}" type="application/x-shockwave-flash" data="{SWF_FILE}">
+		<param name="movie" value="{SWF_FILE}" />
+		<param name="flashvars" value="controls=true&amp;file={FILE}" />
+	</object>
+</video>
+<script>
+	jQuery(document).ready(function($) {
+		// declare object for video
+		var player = new MediaElementPlayer('#player{PLAYER_NR}', {
+			startLanguage:'en',
+			translations:['ar','es','de'],
+			poster: '{PREVIEW_PIC}',
+			success: function(me) {  $('#video-type').html( me.pluginType); }  
+		});
+	});
+</script>
+<!-- END video -->
+<!-- BEGIN flv -->
+<p id="player{PLAYER_NR}">
+<object width="{DISPLAY_WIDTH}" height="{DISPLAY_HEIGHT}" type="application/x-shockwave-flash" data="{SWF_FILE}">
+	<param name="movie" value="{SWF_FILE}" />
+	<param name="flashvars" value="controls=true&file={FILE}" />
+</object>
+</p>
+<!-- END flv -->
+<!-- BEGIN audio -->
+<audio id="player_{APLAYER_NR}" src="{AFILE}" width="{AWIDTH}" height="{AHEIGHT}"></audio>
+<script>
+$('#player_{APLAYER_NR}').mediaelementplayer({});
+</script>
+<!-- END audio -->
+<!-- BEGIN default -->
+<p id="player{PLAYER_NR}">
+<script type="text/javascript">
+	var s{PLAYER_NR} = new SWFObject("./Services/MediaObjects/flash_flv_player/flvplayer.swf","single","{DISPLAY_WIDTH}","{DISPLAY_HEIGHT}","6");
+	s{PLAYER_NR}.addParam("allowfullscreen","true");
+	s{PLAYER_NR}.addVariable("file","{FILE}");
+	s{PLAYER_NR}.addVariable("width","{DISPLAY_WIDTH}");
+	s{PLAYER_NR}.addVariable("height","{DISPLAY_HEIGHT}");
+	s{PLAYER_NR}.write("player{PLAYER_NR}");
+</script>
+</p>
+<!-- END default -->

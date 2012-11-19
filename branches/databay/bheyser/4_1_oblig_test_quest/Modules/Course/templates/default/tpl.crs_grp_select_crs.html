@@ -1,0 +1,36 @@
+	<form action="{FORMACTION}" name="ObjectItems" method="post">
+	  <table class="std" width="60%">
+		<tr class="tbltitle">
+		  <th class="tbltitle" align="left" colspan="2">&nbsp;{TBL_TITLE}</th>
+		</tr>
+		<tr class="tblheader">
+		  <td class="std" nowrap="nowrap" width="1px"></td>
+		  <td class="std" nowrap="nowrap" >{HEADER_DESC}</td>
+		</tr>
+		<!-- BEGIN crs_row -->
+		<tr>
+		  <td class="{ROW_CLASS}">
+			{CHECK_CRS}
+		  </td>
+		  <td class="{ROW_CLASS}">
+			{CRS_TITLE}
+			<!-- BEGIN description -->
+			<div class="il_Description_no_margin">{DESCRIPTION_CRS}</div>
+			<!-- END description -->
+			<div class="il_info">{CRS_PATH}</div>
+		  </td>
+		</tr>
+		<!-- END crs_row -->
+		<tr>
+		  <td class="submit" colspan="4" align="left" nowrap="nowrap">
+				  <div style="float:left;">
+					  <img src="{IMG_ARROW}" border="0" />&nbsp;
+					  <input class="submit" type="submit" name="cmd[assignCourse]" value="{BTN_ASSIGN}" />
+				  </div>
+				  <div style="text-align:right;">
+					<input type="submit" class="submit" name="cmd[listGroupings]" value="{BTN_CANCEL}" />
+				  </div>
+		</td>
+		</tr>
+	  </table>
+	</form>

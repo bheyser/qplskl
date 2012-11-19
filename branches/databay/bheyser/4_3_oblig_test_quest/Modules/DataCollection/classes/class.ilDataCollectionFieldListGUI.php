@@ -1,0 +1,112 @@
+<?php
+/* Copyright (c) 1998-2009 ILIAS open source, Extended GPL, see docs/LICENSE */
+
+require_once ("./Modules/DataCollection/classes/class.ilDataCollectionField.php");
+
+/**
+* Class ilDataCollectionFieldListGUI
+*
+* @author Martin Studer <ms@studer-raimann.ch>
+* @author Marcel Raimann <mr@studer-raimann.ch>
+* @author Fabian Schmid <fs@studer-raimann.ch>
+* @version $Id: 
+*
+*
+* @ingroup ModulesDataCollection
+*/
+
+class ilDataCollectionFieldListGUI
+{
+	/**
+	 * Constructor
+	 *
+	 * @param	object	$a_parent_obj
+	 * @param	int $table_id
+	*/
+	public function  __construct($a_parent_obj, $table_id)
+	{
+		$this->main_table_id = $a_parent_obj->object->getMainTableId();
+		$this->table_id = $table_id;
+		$this->obj_id = $a_parent_obj->obj_id;
+
+		include_once("class.ilDataCollectionDatatype.php");
+
+		//($table_id)
+		//{
+			//$this->table_id = $table_id;
+		//} 
+		//else 
+		//{
+		//	$this->table_id = $this->main_table_id;
+		//}
+
+		return;   
+	}
+	
+	
+	/**
+	 * execute command
+	 */
+	function executeCommand()
+	{
+		global $tpl, $ilCtrl;
+		
+		$cmd = $ilCtrl->getCmd();
+		
+		switch($cmd)
+		{
+			default:
+				$this->$cmd();
+				break;
+		}
+	}
+	
+	/**
+	 * list fields
+	*/
+	public function listFields()
+	{
+		global $tpl, $lng, $ilCtrl, $ilToolbar;
+
+		// Show tables
+		require_once("./Modules/DataCollection/classes/class.ilDataCollectionTable.php");
+		$arrTables = ilDataCollectionTable::getAll($this->obj_id);
+
+		foreach($arrTables as $table)
+		{
+				$options[$table['id']] = $table['title'];
+		}
+		include_once './Services/Form/classes/class.ilSelectInputGUI.php';
+		$table_selection = new ilSelectInputGUI(
+			'',
+				'table_id'
+			);
+		$table_selection->setOptions($options);
+		$table_selection->setValue($this->table_id);
+
+		$ilToolbar->setFormAction($ilCtrl->getFormActionByClass("ilDataCollectionFieldListGUI", "doTableSwitch"));
+        $ilToolbar->addInputItem($table_selection);
+		$ilToolbar->addFormButton($lng->txt('change'),'doTableSwitch');
+
+		//->setParameterByClass("ildatacollectiontableeditgui","table_id", $this->table_id);
+		$ilToolbar->addButton($lng->txt("dcl_add_new_table"), $ilCtrl->getLinkTargetByClass("ildatacollectiontableeditgui", "create"));
+		
+		$records = ilDataCollectionField::getAll($this->table_id);
+
+		require_once('./Modules/DataCollection/classes/class.ilDataCollectionFieldListTableGUI.php');
+		$list = new ilDataCollectionFieldListTableGUI($this, $ilCtrl->getCmd(), $records);
+
+		$tpl->setContent($list->getHTML());
+
+	}
+
+	public function doTableSwitch() {
+		global $ilCtrl;
+
+		$ilCtrl->setParameterByClass("ilObjDataCollectionGUI","table_id", $_POST['table_id']);
+		$ilCtrl->redirectByClass("ilDataCollectionFieldListGUI","listFields"); 			
+
+	}
+}
+
+?>

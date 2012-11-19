@@ -1,0 +1,59 @@
+<div class="ilMainMenuSearch">
+<form class="ilMainMenuSearch" id="mm_search_form" action="{FORMACTION}" method="post" target="_top">
+<div style="margin-top:1px; text-align:left;">
+<table cellpadding="0" cellspacing="0" datatable="0"><tr><td>
+	<!-- block-inline hack, see: http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+		-moz-inline-stack for FF2
+		zoom 1; *display:inline for IE6 & 7 -->
+	<div style="margin-left: width:150px; display: -moz-inline-stack; display:inline-block; zoom: 1; *display:inline;" id="myAutoComplete">
+		<label class="ilAccHidden" for="main_menu_search">{BTN_SEARCH}</label>
+		<input style="width:140px; font-size:80%" type="text" class="ilMainMenuSearch" id="main_menu_search" name="queryString" />
+		<input type="hidden" name="root_id" value="{CONT_REF_ID}" />
+	    <div class="yui-skin-sam" style="font-size: 75%;" id="{ID_AUTOCOMPLETE}"></div>
+	</div>
+	<a href="#">{IMG_MM_SEARCH}</a>
+	</td>
+</tr></table>
+</div><div class="ilOverlay" style="display:none;" id="mm_search_menu">{SEARCH_LINK_MENU}</div>
+	<script type="text/javascript">
+		il.Util.addOnLoad(
+			function()
+			{				
+				if (typeof $ != "undefined")
+				{
+					$("#main_menu_search").autocomplete({
+						source: "{AC_DATASOURCE}",
+						minLength: 3
+					});
+									
+					$("#main_menu_search").bind("focusin focusout keyup click", function(e) {
+							if (this.value.length < 1 && e.type != "focusout")
+							{
+								il.Overlay.show(e, "mm_search_menu", "main_menu_search",
+									false, 'tl', 'bl');
+							}
+							else
+							{
+								if (e.type == "keyup")
+								{
+									il.Overlay.hide(e, "mm_search_menu");
+								}
+							}
+						});
+					
+					$(".ilMainMenuSearch img").bind("click", function(e) {
+							if ($("#main_menu_search").val().length < 1 && e.type != "focusout")
+							{
+								location.href = $("#mm_search_menu a").first().attr('href');
+							}
+							else
+							{
+								$("#mm_search_form").submit();
+							}
+						});
+				}
+			}
+		);
+	</script>
+</form>
+</div>
